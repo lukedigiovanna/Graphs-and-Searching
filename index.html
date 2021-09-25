@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Graphs and Searching
+        </title>
+    </head>
+    <body>
+        open up the console.
+        <script>
+            const points = [
+                [3, 3], // 0
+                [6, 7], // 1
+                [2, 1], // 2
+                [4, 8]  // 3
+            ]
+
+            // lets make a graph; we'll use an adjaceny list to conserve memory
+            const graph = [
+                [3, 1, 2], // this corresponds to all the point vertices that vertex 0 connects to
+                [3, 0],
+                [0],
+                [1, 0]
+            ];
+
+            function depthFirstSearch(vertex, seen=[]) {
+                // go through each vertex connected to that vertex and check if we have explored
+                graph[vertex].forEach(u => {
+                    if (seen.indexOf(u) < 0) { // i.e. the vertex has not been seen
+                        seen.push(u);
+                        depthFirstSearch(u, seen); // recursively investigate vertices from that vertex as well
+                    }
+                });
+                return seen;
+            }
+
+            function breadthFirstSearch(vertex) {
+                let seen = [];
+                let queue = [vertex];
+                while (queue.length > 0) { // while queue is not empty
+                    let v = queue[0];
+                    queue.shift();
+                    graph[v].forEach(u => {
+                        if (seen.indexOf(u) < 0) {
+                            seen.push(u);
+                            queue.push(u);
+                        }
+                    });
+                }
+                return seen;
+            }
+
+            // returns a list representing the shortest distances
+            // each index indicates the ending vertex, i.e. the shortest distance to a particular point on the graph
+            function breadthFirstSearch_ShortestPath(vertex) {
+
+            }
+
+            console.log(breadthFirstSearch(0), depthFirstSearch(0));
+
+        </script>
+    </body>
+</html>
